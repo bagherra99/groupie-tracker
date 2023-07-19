@@ -142,7 +142,7 @@ func getDataFromApiRelation() Relation {
 	defer resp.Body.Close()
 
 	var Info Relation
-	
+
 	err = json.NewDecoder(resp.Body).Decode(&Info)
 	if err != nil {
 		fmt.Println("Error decoding API response:", err)
@@ -151,48 +151,31 @@ func getDataFromApiRelation() Relation {
 
 	return Info
 }
-
-// func ReceiveInformaionFromJsonFile() {
-	
-// }
+type structure struct {
+	Text string
+}
 
 func main() {
-	//getDataFromApi(API, INFO_API)
-	// var target map[string]interface{}
-	// fmt.Println(getDataFromApi(API))
-	// fmt.Println(getDataFromApiArtist())
-	// artists := getDataFromApiArtist()
 
-	// jsonData, err := json.MarshalIndent(artists, "", " ")
-	// if err != nil {
-	// 	fmt.Println("Error marshaling JSON:", err)
-	// 	os.Exit(1)
-	// }
+/*	info := ReceiveDataFromJson()
 
-	// dates := getDataFromApiDates()
-
-	// jsonData1, err := json.MarshalIndent(dates, "", " ")
-	// if err != nil {
-	// 	fmt.Println("Error marshaling JSON:", err)
-	// 	os.Exit(1)
-	// }
-
-	// place := getDataFromApiLocations()
-
-	// jsonData1, err := json.MarshalIndent(place, "", " ")
-	// if err != nil {
-	// 	fmt.Println("Error marshaling JSON:", err)
-	// 	os.Exit(1)
-	// }
-
-	info := ReceiveDataFromJson()
-
-	jsonData1, err := json.MarshalIndent(info, "", " ")
+	 jsonData1, err := json.MarshalIndent(info, "", " ")
 	if err != nil {
 		fmt.Println("Error marshaling JSON:", err)
 		os.Exit(1)
 	}
-	
-	fmt.Println(string(jsonData1))
+
+	fmt.Println(string(jsonData1)) */
 	//===========================================//
+	fmt.Println("Serve started at port :8080\nlocalhost:8080/")
+	http.HandleFunc("/", indexHandler)
+	http.ListenAndServe(":8080", nil)
+}
+
+func indexHandler(w http.ResponseWriter, r *http.Request) {
+	AllInfo := ReceiveDataFromJson()
+	for _, v:=range AllInfo{
+		data:=structure{Text:v.Name}
+		fmt.Println(data)
+	}
 }
