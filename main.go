@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"html/template"
 	"net/http"
 	"os"
 )
@@ -151,31 +152,43 @@ func getDataFromApiRelation() Relation {
 
 	return Info
 }
-type structure struct {
-	Text string
-}
 
 func main() {
 
-/*	info := ReceiveDataFromJson()
+	http.HandleFunc("/", indexDataHandler)
+	// http.Handle("/", http.FileServer(http.Dir("public"))) // Remplace "public" par le répertoire contenant ton fichier HTML
 
-	 jsonData1, err := json.MarshalIndent(info, "", " ")
-	if err != nil {
-		fmt.Println("Error marshaling JSON:", err)
-		os.Exit(1)
-	}
-
-	fmt.Println(string(jsonData1)) */
-	//===========================================//
-	fmt.Println("Serve started at port :8080\nlocalhost:8080/")
-	http.HandleFunc("/", indexHandler)
+	fmt.Println("Serveur démarré sur le port :8080")
 	http.ListenAndServe(":8080", nil)
+	
 }
 
-func indexHandler(w http.ResponseWriter, r *http.Request) {
+func indexDataHandler(w http.ResponseWriter, r *http.Request) {
 	AllInfo := ReceiveDataFromJson()
-	for _, v:=range AllInfo{
-		data:=structure{Text:v.Name}
-		fmt.Println(data)
+
+	tmpl, err := template.ParseFiles("public/index.html")
+	if err != nil {
+		http.Error(w, "error while parsing", http.StatusInternalServerError)
+		return
+	}
+
+	err = tmpl.Execute(w, AllInfo)
+	if err != nil {
+		http.Error(w, "error while executing", http.StatusInternalServerError)
+	}
+}
+
+func artistHandler(w http.ResponseWriter, r *http.Request) {
+	artist := ReceiveDataFromJson()
+
+	tmpl, err := template.ParseFiles("public/index.html")
+	if err != nil {
+		http.Error(w, "error while parsing", http.StatusInternalServerError)
+		return
+	}
+
+	err = tmpl.Execute(w, AllInfo)
+	if err != nil {
+		http.Error(w, "error while executing", http.StatusInternalServerError)
 	}
 }
