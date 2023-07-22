@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Détails de l'artiste - {{.Name}}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f7f7f7;
+        }
+
+        .artist-details {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            border-radius: 5px;
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 300px;
+            overflow: hidden;
+            border-radius: 5px;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-top: 10px;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        p {
+            font-size: 18px;
+            color: #888;
+            text-align: center;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="artist-details">
+        <div class="image-container">
+            <img src="{{.Image}}" alt="{{.Name}}">
+        </div>
+        <h1>{{.Name}}</h1>
+        <p>Date de création : {{.CreationDate}}</p>
+        <h2>Membres du groupe :</h2>
+        <ul>
+            {{range .Members}}
+            <li>{{.}}</li>
+            {{end}}
+        </ul>
+        <h2>Lieux de concert :</h2>
+        <ul>
+            {{range .Locations}}
+            <li>{{.}}</li>
+            {{end}}
+        </ul>
+        <h2>Concert Dates :</h2>
+        <ul>
+            {{range .ConcertDates}}
+            <li>{{.}}</li>
+            {{end}}
+        </ul>
+        <ul>
+            {{range $key, $value := .Relations}}
+            <li>{{$key}}: {{range $value}}
+                <li>{{.}}</li>
+                {{end}}
+            </li>
+            {{end}}
+        </ul>
+    </div>
+</body>
+
+</html>

@@ -1,27 +1,31 @@
-	package main
+package utils
 
-	// import "fmt"
+// import "fmt"
+import (
+	"main/model"
+	"main/src"
+)
 
-	type AllArtists struct {
-		ID           int
-		Image        string
-		Name         string
-		Members      []string
-		CreationDate int
-		FirstAlbum   string
-		Locations    []string
-		ConcertDates []string
-		Relations    map[string][]string
-	}
+// type AllArtists struct {
+// 	ID           int
+// 	Image        string
+// 	Name         string
+// 	Members      []string
+// 	CreationDate int
+// 	FirstAlbum   string
+// 	Locations    []string
+// 	ConcertDates []string
+// 	Relations    map[string][]string
+// }
 
-	func ReceiveDataFromJson() []AllArtists {
-		artists := getDataFromApiArtist()
-		locations := getDataFromApiLocations()
-		dates := getDataFromApiDates()
-		relation := getDataFromApiRelation()
+	func ReceiveDataFromJson() []model.AllArtists {
+		artists := src.GetDataFromApiArtist()
+		locations := src.GetDataFromApiLocations()
+		dates := src.GetDataFromApiDates()
+		relation := src.GetDataFromApiRelation()
 
-		var SingleInfo AllArtists
-		var AllInfo []AllArtists
+		var SingleInfo model.AllArtists
+		var AllInfo []model.AllArtists
 
 		for _, artist := range artists {
 			SingleInfo.ID = artist.ID

@@ -1,61 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <title>Page d'affichage des données</title>
+    <title>Liste des Artistes</title>
     <style>
       body {
         font-family: Arial, sans-serif;
-        margin: 20px;
+        margin: 0;
+        padding: 20px;
+        background-color: #f7f7f7;
       }
+
       h1 {
         text-align: center;
+        margin-bottom: 30px;
       }
-      .artists-container {
-        /* display: flex;
-        flex-direction: row; */
-        /* flex-wrap: wrap; */
+
+      .artist-list {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        /* justify-content: center; */
       }
-      .artist-card {
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        padding: 10px;
-        margin: 10px;
+
+      .card {
         width: 300px;
+        margin-bottom: 20px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        background-color: #fff;
+        border-radius: 5px;
+        transition: transform 0.3s ease;
       }
-      .artist-card img {
+
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+      }
+
+      .image-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 200px;
+        overflow: hidden;
+        border-radius: 5px;
+      }
+
+      a {
+        text-decoration: none;
+      }
+
+      .image-container img {
         width: 100%;
-        height: auto;
+        height: 100%;
+        object-fit: cover;
       }
-      .artist-card h2 {
+
+      .card h2 {
+        font-size: 18px;
         margin-top: 10px;
+        margin-bottom: 5px;
+        text-align: center;
+        color: #3f3f3f;
       }
-      .artist-card p {
-        margin: 5px 0;
+
+      .card p {
+        font-size: 14px;
+        color: #888;
+        text-align: center;
       }
     </style>
   </head>
+
   <body>
-    <h1>Liste des artistes</h1>
-    <div class="artists-container">
+    <!-- Champ de recherche avec suggestions -->
+    <form action="/search" method="get">
+      <label for="search">Rechercher un artiste :</label>
+      <input
+        type="text"
+        id="search"
+        name="search"
+        placeholder="Nom de l'artiste..."
+        list="suggestions"
+      />
+      <datalist id="suggestions">
+        <!-- Ici, nous allons générer les options pour les suggestions à l'aide d'une boucle Go -->
+        {{range .}}
+        <option value="{{.Name}}==>artist/band">{{.Name}}->artist/band</option>
+        {{range .Members}}
+        <option value="{{.}}==>member">{{.}}->member</option>
+        {{end}} 
+        {{end}}
+      </datalist>
+      <button type="submit">Rechercher</button>
+    </form>
+    <h1>Liste des Artistes</h1>
+    <div class="artist-list">
       {{range .}}
-    <div class="artist-card">
-        <img src="{{.Image}}" alt="{{.Name}}">
-        <h2>{{.Name}}</h2>
-        <p>Membres: {{range .Members}}{{.}}, {{end}}</p>
-        <p>Date de création: {{.CreationDate}}</p>
-        <p>Premier album: {{.FirstAlbum}}</p>
-        <p>Lieux: {{range .Locations}}{{.}}, {{end}}</p>
-        <p>Dates de concert: {{range .ConcertDates}}{{.}}, {{end}}</p>
-        <p>Relations: {{.Relations}}</p>
+      <div class="card">
+        <a href="/artist/{{.ID}}">
+          <!-- Ajoute le lien vers la page artist.html avec l'ID de l'artiste -->
+          <div class="image-container">
+            <img src="{{.Image}}" alt="{{.Name}}" />
+          </div>
+          <h2>{{.Name}}</h2>
+          <p>Date de création : {{.CreationDate}}</p>
+        </a>
       </div>
       {{end}}
-  </div>
+    </div>
   </body>
 </html>
