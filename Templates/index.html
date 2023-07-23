@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/static/css/style.css">
+  <title>Document</title>
+</head>
+
+<body>
+  <!-- Add this button/link wherever you want to trigger the pop-up -->
+  <button onclick="openSearchPopup()">Search Artists</button>
+  <!-- Add this div for the pop-up -->
+  <div id="searchPopup" class="popup">
+    <div class="popup-content">
+      <span class="close" onclick="closeSearchPopup()">&times;</span>
+      <h2>Search Artists</h2>
+      <form action="/search" method="GET">
+        <label for="name">Search by Name:</label>
+        <input type="text" id="name" name="name" placeholder="Enter band or artist name">
+
+        <button type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+
+  <h1>Liste des artistes</h1>
+  <div class="artists-container">
+    {{range .}}
+    <div class="artist-card">
+      <a href="/details/{{.ID}}"> <img src="{{.Image}}" alt="{{.Name}}"></a>
+      <h2>{{.Name}}</h2>
+      <p>Date de création: {{.CreationDate}}</p>
+    </div>
+    {{end}}
+  </div>
+</body>
+<script>
+  // JavaScript functions to show/hide the pop-up
+  function openSearchPopup() {
+    document.getElementById("searchPopup").style.display = "block";
+  }
+
+  function closeSearchPopup() {
+    document.getElementById("searchPopup").style.display = "none";
+  }
+</script>
+
+
+</html>

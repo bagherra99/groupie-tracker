@@ -1,194 +1,20 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
-	"html/template"
+	Handlers "groupie/Handlers"
 	"net/http"
-	"os"
 )
 
-type Artist struct {
-	ID           int      `json:"id"`
-	Image        string   `json:"image"`
-	Name         string   `json:"name"`
-	Members      []string `json:"members"`
-	CreationDate int      `json:"creationDate"`
-	FirstAlbum   string   `json:"firstAlbum"`
-	Locations    string   `json:"locations"`
-	ConcertDates string   `json:"concertDates"`
-	Relations    string   `json:"relations"`
-}
-
-type Locations struct {
-	Index []struct {
-		ID        int      `json:"id"`
-		Locations []string `json:"locations"`
-		Dates     string   `json:"dates"`
-	} `json:"index"`
-}
-
-type Dates struct {
-	Index []struct {
-		ID    int      `json:"id"`
-		Dates []string `json:"dates"`
-	} `json:"index"`
-}
-
-type Relation struct {
-	Index []struct {
-		ID                int                 `json:"id"`
-		DatesandLocations map[string][]string `json:"datesLocations"`
-	}
-}
-
-const API = "https://groupietrackers.herokuapp.com/api"
-
-func getDataFromApi(url string) []string {
-	resp, err := http.Get(API)
-	if err != nil {
-		fmt.Println("No response: ", err)
-	}
-	defer resp.Body.Close()
-
-	var target map[string]string
-	err = json.NewDecoder(resp.Body).Decode(&target)
-	if err != nil {
-		fmt.Println("Error decoding API response:", err)
-		os.Exit(1)
-	}
-	//var target map[string]interface{}
-	// target, ok := (target.(*map[string]interface{}))
-	// if !ok {
-	// 	fmt.Println("Invalid target type")
-	// 	os.Exit(1)
-	// }
-	var tab []string
-	var ArtistsApi, LocationsApi, RelationsApi, DatesApi string
-	ArtistsApi = target["artists"]
-	tab = append(tab, ArtistsApi)
-	LocationsApi = target["locations"]
-	tab = append(tab, LocationsApi)
-	RelationsApi = target["dates"]
-	tab = append(tab, RelationsApi)
-	DatesApi = target["relation"]
-	tab = append(tab, DatesApi)
-
-	return tab
-
-	// fmt.Println(tab)
-}
-
-func getDataFromApiArtist() []Artist {
-	ApiArtist := getDataFromApi(API)[0]
-	resp, err := http.Get(ApiArtist)
-	if err != nil {
-		fmt.Println("No response from request")
-	}
-	defer resp.Body.Close()
-
-	// create a slice for our JSON data to be unmarshalled into.
-	Artist := []Artist{}
-	err = json.NewDecoder(resp.Body).Decode(&Artist)
-	if err != nil {
-		fmt.Println("Error decoding API response:", err)
-		os.Exit(1)
-	}
-
-	return Artist
-}
-
-func getDataFromApiDates() Dates {
-	ApiDates := getDataFromApi(API)[2]
-	resp, err := http.Get(ApiDates)
-	if err != nil {
-		fmt.Println("No response from request")
-	}
-	defer resp.Body.Close()
-
-	var dates Dates
-	err = json.NewDecoder(resp.Body).Decode(&dates)
-	if err != nil {
-		fmt.Println("Error decoding API response:", err)
-		os.Exit(1)
-	}
-
-	return dates
-}
-
-func getDataFromApiLocations() Locations {
-	ApiLocations := getDataFromApi(API)[1]
-	resp, err := http.Get(ApiLocations)
-	if err != nil {
-		fmt.Println("No response from request")
-	}
-	defer resp.Body.Close()
-
-	var place Locations
-	err = json.NewDecoder(resp.Body).Decode(&place)
-	if err != nil {
-		fmt.Println("Error decoding API response:", err)
-		os.Exit(1)
-	}
-
-	return place
-}
-
-func getDataFromApiRelation() Relation {
-	ApiRelation := getDataFromApi(API)[3]
-	resp, err := http.Get(ApiRelation)
-	if err != nil {
-		fmt.Println("No response from request")
-	}
-	defer resp.Body.Close()
-
-	var Info Relation
-
-	err = json.NewDecoder(resp.Body).Decode(&Info)
-	if err != nil {
-		fmt.Println("Error decoding API response:", err)
-		os.Exit(1)
-	}
-
-	return Info
-}
+var fs = http.FileServer(http.Dir("static"))
 
 func main() {
 
-	http.HandleFunc("/", indexDataHandler)
-	// http.Handle("/", http.FileServer(http.Dir("public"))) // Remplace "public" par le répertoire contenant ton fichier HTML
-
-	fmt.Println("Serveur démarré sur le port :8080")
+	http.HandleFunc("/", Handlers.IndexDataHandler)
+	http.HandleFunc("/details/", Handlers.DetailsHandler)
+	http.HandleFunc("/search/", Handlers.SearchHandler)
+	http.Handle("/static/", http.StripPrefix("/static/", fs))
+	fmt.Println("http://localhost:8080\nServeur démarré sur le port :8080")
 	http.ListenAndServe(":8080", nil)
-	
-}
 
-func indexDataHandler(w http.ResponseWriter, r *http.Request) {
-	AllInfo := ReceiveDataFromJson()
-
-	tmpl, err := template.ParseFiles("public/index.html")
-	if err != nil {
-		http.Error(w, "error while parsing", http.StatusInternalServerError)
-		return
-	}
-
-	err = tmpl.Execute(w, AllInfo)
-	if err != nil {
-		http.Error(w, "error while executing", http.StatusInternalServerError)
-	}
-}
-
-func artistHandler(w http.ResponseWriter, r *http.Request) {
-	artist := ReceiveDataFromJson()
-
-	tmpl, err := template.ParseFiles("public/index.html")
-	if err != nil {
-		http.Error(w, "error while parsing", http.StatusInternalServerError)
-		return
-	}
-
-	err = tmpl.Execute(w, AllInfo)
-	if err != nil {
-		http.Error(w, "error while executing", http.StatusInternalServerError)
-	}
 }

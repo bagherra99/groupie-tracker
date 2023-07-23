@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <title>Groupie Tracker</title>
+</head>
+
+<body>
+    <div class="artists-container">
+        <div class="artist-card">
+            <img src="{{.Image}}" alt="{{.Name}}">
+            <h2>{{.Name}}</h2>
+            <p>Membres: {{range .Members}}{{.}}, {{end}}</p>
+            <p>Date de création: {{.CreationDate}}</p>
+            <p>Premier album: {{.FirstAlbum}}</p>
+            <p>Lieux: {{range .Locations}}{{.}}, {{end}}</p>
+            <p>Dates de concert: {{range .ConcertDates}}{{.}}, {{end}}</p>
+            <p>{{range $key, $values := .Relations}}
+                <span class="caret">{{$key}}:</span>
+            <ul class="nested">
+                {{range $value := $values}}
+                <li>{{$value}}</li>
+                {{end}}
+            </ul>
+            {{end}}
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>
