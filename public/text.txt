@@ -1,0 +1,224 @@
+case "location":
+    // Filtrer les artistes dont le nom correspond à la recherche
+    var searchedArtist []model.AllArtists
+    var filteredMembers []string
+    var filteredLocations []string // Create a new slice to store filtered locations
+
+    for _, artist := range AllInfo {
+        for _, location := range artist.Locations {
+            if strings.Contains(strings.ToLower(location), strings.ToLower(query)) {
+                searchedArtist = append(searchedArtist, artist)
+                filteredLocations = append(filteredLocations, location) // Add the location to the filtered locations slice
+            }
+        }
+    }
+
+    // Use the RemoveDuplicates function to filter the duplicate locations
+    uniqueLocations := RemoveDuplicates(filteredLocations)
+
+    // Utilise les artistes filtrés, les membres filtrés et les locations filtrées pour l'affichage
+    return struct {
+        Artists         []model.AllArtists
+        FilteredMembers []string
+        FilteredLocations []string // Include the filteredLocations field in the return value
+    }{
+        Artists:         searchedArtist,
+        FilteredMembers: filteredMembers,
+        FilteredLocations: uniqueLocations, // Assign uniqueLocations to the filteredLocations field
+    }
+
+     {{range $location := .FilteredLocations}}
+    <option value="{{$location}}==>location">{{$location}} - location</option>
+    {{end}}
+
+
+     else {
+		fmt.Println("guenal si inspecteur bi fall wala chrome moy defeant")
+	}
+
+
+    /////////////////////////////////////////////////////////////////////////////////
+    Hello! I have a program i wanna show to you. 
+package handlers
+
+import (
+	"fmt"
+	"main/model"
+
+	// "main/handlers"
+	"strings"
+)
+
+var filteredArtists []model.AllArtists
+
+func SearchArtist(s string) []model.AllArtists {
+	tabInput := strings.Split(s, "==>")
+	// fmt.Println(tabInput)
+	if len(tabInput) == 2 {
+		query := tabInput[0]
+		category := tabInput[1]
+		fmt.Println(query)
+		fmt.Println(category)
+		
+		// Si un terme de recherche est saisi, filtre les artistes correspondants
+		if s != "" {
+			switch strings.ToLower(category) {
+			case "artist/band":
+				// Filtrer les artistes dont le nom correspond à la recherche
+				var searchedArtist []model.AllArtists
+				for _, artist := range AllInfo {
+					if strings.Contains(strings.ToLower(artist.Name), strings.ToLower(query)) {
+						searchedArtist = append(searchedArtist, artist)
+						// fmt.Println("================================")
+						// fmt.Println(searchedArtist)
+					}
+				}
+				// Utilise les artistes filtrés pour l'affichage
+				filteredArtists = searchedArtist
+				// fmt.Println("============================")
+				// fmt.Println(filteredArtists)
+			case "member":
+				// Filtrer les artistes dont le nom correspond à la recherche
+				var searchedArtist []model.AllArtists
+				for _, artist := range AllInfo {
+					for _, member := range artist.Members {
+						if strings.Contains(strings.ToLower(member), strings.ToLower(query)) {
+							searchedArtist = append(searchedArtist, artist)
+							// fmt.Println("================================")
+							// fmt.Println(searchedArtist)
+						}
+					}
+				}
+				// Utilise les artistes filtrés pour l'affichage
+				filteredArtists = searchedArtist
+				// fmt.Println("================================")
+				// fmt.Println(filteredArtists)
+			case "location":
+				// Filtrer les artistes dont le nom correspond à la recherche
+				var searchedArtist []model.AllArtists
+				for _, artist := range AllInfo {
+					for _, location := range artist.Locations {
+						if strings.Contains(strings.ToLower(location), strings.ToLower(query)) {
+							searchedArtist = append(searchedArtist, artist)
+							// fmt.Println("================================")
+							// fmt.Println(searchedArtist)
+						}
+					}
+				}
+				// Utilise les artistes filtrés pour l'affichage
+				filteredArtists = searchedArtist
+				// fmt.Println("================================")
+				// fmt.Println(filteredArtists)
+			}
+		}
+	} else {
+		fmt.Println("guenal si inspecteur bi fall wala chrome moy defeant")
+	}
+	return filteredArtists
+}
+package handlers
+
+import (
+	"fmt"
+	"html/template"
+	"net/http"
+)
+
+// var AllInfo = ReceiveDataFromJson()
+
+func SearchHandler(w http.ResponseWriter, r *http.Request) {
+	// Récupère le terme de recherche saisi par l'utilisateur
+	input := r.URL.Query().Get("search")
+	fmt.Println(input)
+	searched := SearchArtist(input)
+	fmt.Println(searched)
+
+	tmpl, err := template.ParseFiles("public/search.html")
+	if err != nil {
+		http.Error(w, "error while parsing", http.StatusInternalServerError)
+		return
+	}
+
+	err = tmpl.Execute(w, searched)
+}
+<body>
+    <!-- Champ de recherche avec suggestions -->
+    <form action="/search" method="get">
+      <label for="search">Rechercher un artiste :</label>
+      <input
+        type="text"
+        id="search"
+        name="search"
+        placeholder="Nom de l'artiste..."
+        list="suggestions"
+      />
+      <datalist id="suggestions">
+        <!-- Ici, nous allons générer les options pour les suggestions à l'aide d'une boucle Go -->
+        {{range .}}
+        <option value="{{.Name}}==>artist/band">{{.Name}} - artist/band</option>
+        {{range .Members}}
+        <option value="{{.}}==>member">{{.}} - member</option>
+        {{end}} 
+        {{range .Locations}}
+        <option value="{{.}}==>location">{{.}} - location</option>
+        {{end}}
+        {{end}}
+      </datalist>
+      <button type="submit">Rechercher</button>
+    </form>
+    <h1>Liste des Artistes</h1>
+    <div class="artist-list">
+      {{range .}}
+      <div class="card">
+        <a href="/artist/{{.ID}}">
+          <!-- Ajoute le lien vers la page artist.html avec l'ID de l'artiste -->
+          <div class="image-container">
+            <img src="{{.Image}}" alt="{{.Name}}" />
+          </div>
+          <h2>{{.Name}}</h2>
+          <p>Date de création : {{.CreationDate}}</p>
+        </a>
+      </div>
+      {{end}}
+    </div>
+  </body>
+</html>
+package handlers
+
+import (
+	"html/template"
+	"main/utils"
+	"net/http"
+)
+
+var AllInfo = utils.ReceiveDataFromJson()
+
+
+func IndexDataHandler(w http.ResponseWriter, r *http.Request) {
+	
+	if r.URL.Path != "/" {
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+
+	tmpl, err := template.ParseFiles("public/index.html")
+	if err != nil {
+		http.Error(w, "error while parsing", http.StatusInternalServerError)
+		return
+	}
+
+	err = tmpl.Execute(w, AllInfo)
+}
+Now, i want you to help me with a remove duplicated locations function func RemoveDuplicates(input []string) []string {
+	uniqueMap := make(map[string]bool)
+	var result []string
+	for _, item := range input {
+		lowercaseItem := strings.ToLower(item) // Ignorer la casse pour le filtrage
+		if !uniqueMap[lowercaseItem] {
+			uniqueMap[lowercaseItem] = true
+			result = append(result, item)
+		}
+	}
+	return result
+}
+Don't use maps please

@@ -84,18 +84,21 @@
       />
       <datalist id="suggestions">
         <!-- Ici, nous allons générer les options pour les suggestions à l'aide d'une boucle Go -->
-        {{range .}}
-        <option value="{{.Name}}==>artist/band">{{.Name}}->artist/band</option>
-        {{range .Members}}
-        <option value="{{.}}==>member">{{.}}->member</option>
+        {{range .Allartist}}
+        <option value="{{.Name}}==>artist/band">{{.Name}} - artist/band</option>
         {{end}} 
-        {{end}}
+        {{range .Memb}}
+        <option value="{{.}}==>member">{{.}} - member</option>
+        {{end}} 
+        {{range .Locat}}
+        <option value="{{.}}==>location">{{.}} - location</option>
+        {{end}} 
       </datalist>
       <button type="submit">Rechercher</button>
     </form>
     <h1>Liste des Artistes</h1>
     <div class="artist-list">
-      {{range .}}
+      {{range .Allartist}}
       <div class="card">
         <a href="/artist/{{.ID}}">
           <!-- Ajoute le lien vers la page artist.html avec l'ID de l'artiste -->

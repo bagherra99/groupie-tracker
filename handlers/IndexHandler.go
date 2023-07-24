@@ -4,6 +4,8 @@ import (
 	"html/template"
 	"main/utils"
 	"net/http"
+	tools "main/tools"
+	model "main/model"
 )
 
 var AllInfo = utils.ReceiveDataFromJson()
@@ -18,6 +20,36 @@ func IndexDataHandler(w http.ResponseWriter, r *http.Request) {
 	//     searchOptions = append(searchOptions, artist.Name)
 	//     searchOptions = append(searchOptions, artist.Members...)
 	// }
+	input := r.URL.Query().Get("search")
+	var Tab []string
+	var TabMember []string
+	for _, item := range AllInfo {
+		for _, v := range item.Locations {
+			if !tools.IsStringInArray(Tab, v) {
+				Tab = append(Tab, v)
+			}
+		}
+		for _, l := range item.Members {
+			if !tools.IsStringInMember(TabMember, l) {
+				TabMember = append(TabMember, l)
+			}
+		}
+	}
+	searched := SearchArtist(input)
+
+	data := struct {
+		Allartist []model.AllArtists
+		// Input     string
+		Locat     []string
+		Memb      []string
+		Searched    []model.AllArtists
+	}{
+		Allartist: AllInfo,
+		// Input:     input,
+		Locat:     Tab,
+		Memb:      TabMember,
+		Searched:    searched,
+	}
 	if r.URL.Path != "/" {
 		w.WriteHeader(http.StatusNotFound)
 		return
@@ -29,5 +61,5 @@ func IndexDataHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = tmpl.Execute(w, AllInfo)
+	err = tmpl.Execute(w, data)
 }
