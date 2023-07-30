@@ -17,18 +17,58 @@
     <div class="popup-content">
       <span class="close" onclick="closeSearchPopup()">&times;</span>
       <h2>Search Artists</h2>
+      <!--  <form action="/search" method="GET"> -->
       <form action="/search" method="GET">
-        <label for="name">Search by Name:</label>
-        <input type="text" id="name" name="name" placeholder="Enter band or artist name">
+      <label for="name">Search by Name:</label>
+      <input type="text" id="name" name="name" placeholder="Enter band or artist name" list="suggestions">
+      <datalist id="suggestions">
+        {{range .Allartist}}
+        <option value="{{.Name}}==>artist/band">{{.Name}}->artist/band</option>
+        {{end}}
+      <!--   {{range .Memb}}
+        <option value="{{.}}==>member">{{.}}->member</option>
+        {{end}} -->
+      </datalist>
+      <!-- Filters -->
+      <h3>Filters:</h3>
 
-        <button type="submit">Search</button>
+      <!-- Range filter for creationDate using a bar (slider) -->
+      <label for="creationDate">Creation Date:</label>
+      <input type="range" id="creationDateFrom" name="creationDateFrom" min="1950" max="2018" step="1">
+      To <input type="range" id="creationDateTo" name="creationDateTo" min="1950" max="2018" step="1">
+
+      <!-- Calendar for firstAlbumDate -->
+      <label for="firstAlbumDate">First Album Date:</label>
+      <input type="date" id="firstAlbumDate" name="firstAlbumDate">
+
+      <!-- Checkbox for numMembers -->
+      <label for="numMembers">Number of Members:</label>
+      <input type="checkbox" name="numMembers" value="1"> 1
+      <input type="checkbox" name="numMembers" value="2"> 2
+      <input type="checkbox" name="numMembers" value="3"> 3
+      <input type="checkbox" name="numMembers" value="4"> 4
+      <input type="checkbox" name="numMembers" value="5"> 5
+      <input type="checkbox" name="numMembers" value="6"> 6
+      <input type="checkbox" name="numMembers" value="7"> 7
+      <input type="checkbox" name="numMembers" value="8"> 8
+
+
+      <label for="concertLocations">Concert Locations:</label>
+      <input type="text" id="concertLocations" name="concertLocations" placeholder="Enter concert locations"
+        list="suggestionsLoc">
+      <datalist id="suggestionsLoc">
+        {{range .Locat}}
+        <option value="{{.}}==>location">{{.}}==>location</option>
+        {{end}}
+      </datalist>
+
+      <button type="submit">Search</button>
       </form>
     </div>
   </div>
-
   <h1>Liste des artistes</h1>
   <div class="artists-container">
-    {{range .}}
+    {{range .Allartist}}
     <div class="artist-card">
       <a href="/details/{{.ID}}"> <img src="{{.Image}}" alt="{{.Name}}"></a>
       <h2>{{.Name}}</h2>
@@ -48,5 +88,24 @@
   }
 </script>
 
-
 </html>
+
+<!--  <form action="/search" method="get">
+      <label for="search">Rechercher un artiste :</label>
+      <input
+        type="text"
+        id="search"
+        name="search"
+        placeholder="Nom de l'artiste..."
+        list="suggestions"
+      />
+      <datalist id="suggestions">
+        {{range .}}
+        <option value="{{.Name}}==>artist/band">{{.Name}}->artist/band</option>
+        {{range .Members}}
+        <option value="{{.}}==>member">{{.}}->member</option>
+        {{end}} 
+        {{end}}
+      </datalist>
+      <button type="submit">Rechercher</button>
+    </form> -->

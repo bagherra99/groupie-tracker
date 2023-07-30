@@ -12,6 +12,7 @@ func main() {
 
 	http.HandleFunc("/", Handlers.IndexDataHandler)
 	http.HandleFunc("/details/", Handlers.DetailsHandler)
+//	http.HandleFunc("/filters/", Handlers.FiltersHandler)
 	http.HandleFunc("/search/", Handlers.SearchHandler)
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	fmt.Println("http://localhost:8080\nServeur démarré sur le port :8080")
