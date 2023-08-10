@@ -2,73 +2,7 @@
 <html lang="en">
   <head>
     <title>Liste des Artistes</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 20px;
-        background-color: #f7f7f7;
-      }
-
-      h1 {
-        text-align: center;
-        margin-bottom: 30px;
-      }
-
-      .artist-list {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      .card {
-        width: 300px;
-        margin-bottom: 20px;
-        padding: 10px;
-        border: 1px solid #ccc;
-        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-        background-color: #fff;
-        border-radius: 5px;
-        transition: transform 0.3s ease;
-      }
-
-      .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
-      }
-
-      .image-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 200px;
-        overflow: hidden;
-        border-radius: 5px;
-      }
-
-      a {
-        text-decoration: none;
-      }
-
-      .image-container img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-
-      .card h2 {
-        font-size: 18px;
-        margin-top: 10px;
-        margin-bottom: 5px;
-        text-align: center;
-        color: #3f3f3f;
-      }
-
-      .card p {
-        font-size: 14px;
-        color: #888;
-        text-align: center;
-      }
-    </style>
+    <link rel="stylesheet" href="../static/style.css" />
   </head>
 
   <body>
@@ -86,27 +20,68 @@
         <!-- Ici, nous allons générer les options pour les suggestions à l'aide d'une boucle Go -->
         {{range .Allartist}}
         <option value="{{.Name}}==>artist/band">{{.Name}} - artist/band</option>
-        {{end}} 
-        {{range .Memb}}
+        {{end}} {{range .Memb}}
         <option value="{{.}}==>member">{{.}} - member</option>
-        {{end}} 
-        {{range .Locat}}
+        {{end}} {{range .Locat}}
         <option value="{{.}}==>location">{{.}} - location</option>
-        {{end}} 
+        {{end}}
       </datalist>
       <button type="submit">Rechercher</button>
     </form>
     <h1>Liste des Artistes</h1>
     <div class="artist-list">
       {{range .Allartist}}
-      <div class="card">
+      <div class="main_body">
+        <!-- Ajoute le lien vers la page artist.html avec l'ID de l'artiste -->
         <a href="/artist/{{.ID}}">
-          <!-- Ajoute le lien vers la page artist.html avec l'ID de l'artiste -->
-          <div class="image-container">
-            <img src="{{.Image}}" alt="{{.Name}}" />
+          <div class="card">
+            <div class="side-front">
+              <h5 class="heading">{{.Name}}</h5>
+              <div class="score-main">
+                <img src="{{.Image}}" alt="{{.Name}}">
+              </div>
+              <h4 class="appreciation">{{.CreationDate}}</h4>
+              <p class="para">
+                Date de creation
+              </p>
+            </div>
+            <div class="side-back">
+              <div class="summery-heading">Summary</div>
+              <div class="box-1 box">
+                <div class="side-boxes">
+                  <p class="text-1">Reaction</p>
+                  <p>
+                    <span class="per">80</span><span class="out-of">/ 100</span>
+                  </p>
+                </div>
+              </div>
+              <div class="box-2 box">
+                <div class="side-boxes">
+                  <p class="text-2">Memory</p>
+                  <p>
+                    <span class="per">92</span><span class="out-of">/ 100</span>
+                  </p>
+                </div>
+              </div>
+              <div class="box-3 box">
+                <div class="side-boxes">
+                  <p class="text-3">Verbal</p>
+                  <p>
+                    <span class="per">61</span><span class="out-of">/ 100</span>
+                  </p>
+                </div>
+              </div>
+              <div class="box-4 box">
+                <div class="side-boxes">
+                  <p class="text-4">Visual</p>
+                  <p>
+                    <span class="per">72</span><span class="out-of">/ 100</span>
+                  </p>
+                </div>
+              </div>
+              <button class="btn-continue">Continue</button>
+            </div>
           </div>
-          <h2>{{.Name}}</h2>
-          <p>Date de création : {{.CreationDate}}</p>
         </a>
       </div>
       {{end}}

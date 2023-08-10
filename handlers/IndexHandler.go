@@ -12,14 +12,6 @@ var AllInfo = utils.ReceiveDataFromJson()
 
 
 func IndexDataHandler(w http.ResponseWriter, r *http.Request) {
-	// AllInfo := ReceiveDataFromJson()
-	// Génère une liste de noms d'artistes pour les suggestions
-	// Créer une liste d'options pour la barre de recherche (noms d'artistes et membres)
-	// var searchOptions []string
-	// for _, artist := range AllInfo {
-	//     searchOptions = append(searchOptions, artist.Name)
-	//     searchOptions = append(searchOptions, artist.Members...)
-	// }
 	input := r.URL.Query().Get("search")
 	var Tab []string
 	var TabMember []string

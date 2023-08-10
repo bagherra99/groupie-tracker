@@ -3,6 +3,7 @@ package handlers
 import (
 	"html/template"
 	"main/model"
+	"main/tools"
 	"net/http"
 	"strconv"
 )
@@ -12,9 +13,16 @@ import (
 func ArtistDataHandler(w http.ResponseWriter, r *http.Request) {
 	// Récupère l'ID de l'artiste à partir de l'URL
 	artistID := r.URL.Path[len("/artist/"):]
-	id, err := strconv.Atoi(artistID)
-	if err != nil {
-		http.Error(w, "Invalid artist ID", http.StatusBadRequest)
+	var id int
+	var err error
+	if tools.IsNumeric(artistID) {
+		id, err = strconv.Atoi(artistID)
+		if err != nil {
+			http.Error(w, "Invalid artist ID", http.StatusBadRequest)
+			return
+		}
+	}else{
+		http.Error(w, "bindal chiffre sans signe", http.StatusNotFound)
 		return
 	}
 
