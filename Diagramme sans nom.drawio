@@ -1,14 +1,14 @@
-<mxfile host="app.diagrams.net" modified="2023-11-11T03:01:54.779Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36" etag="9_XcaV5yPLyPqC_jg2gx" version="22.1.0" type="github">
+<mxfile host="app.diagrams.net" modified="2023-11-11T03:06:40.314Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36" etag="xicJdPoFMf5EoHIyuXv4" version="22.1.0" type="github">
   <diagram name="Page-1" id="a6i6F0altm2IYjbj3iWz">
-    <mxGraphModel dx="2200" dy="2324" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="880" dy="1631" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="pOMxqucZRWbTER7i5tgz-1" value="" style="whiteSpace=wrap;html=1;fillColor=#59C2FF;gradientColor=none;strokeColor=default;fontStyle=0;arcSize=20;" vertex="1" parent="1">
-          <mxGeometry x="167" y="-430" width="2263" height="1250" as="geometry" />
+          <mxGeometry x="360" y="-460" width="2263" height="1250" as="geometry" />
         </mxCell>
         <mxCell id="pOMxqucZRWbTER7i5tgz-51" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b1ddf0;strokeColor=default;gradientColor=none;shadow=0;glass=0;treeFolding=0;treeMoving=0;" vertex="1" parent="1">
-          <mxGeometry x="200" y="-70" width="1160" height="700" as="geometry" />
+          <mxGeometry x="393" y="-100" width="1160" height="700" as="geometry" />
         </mxCell>
         <mxCell id="pOMxqucZRWbTER7i5tgz-4" value="" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#6666FF;" vertex="1" parent="1">
           <mxGeometry x="220" y="-60" width="440" height="440" as="geometry" />
@@ -62,12 +62,6 @@
         <mxCell id="pOMxqucZRWbTER7i5tgz-21" value="" style="shape=image;html=1;verticalAlign=top;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;imageAspect=0;aspect=fixed;image=https://cdn1.iconfinder.com/data/icons/unicons-line-vol-5/24/react-128.png;imageBackground=default;" vertex="1" parent="1">
           <mxGeometry x="887" y="175" width="78" height="78" as="geometry" />
         </mxCell>
-        <mxCell id="pOMxqucZRWbTER7i5tgz-25" value="" style="shape=image;html=1;verticalAlign=top;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;imageAspect=0;image=https://cdn1.iconfinder.com/data/icons/unicons-line-vol-6/24/vuejs-alt-128.png;imageBackground=default;" vertex="1" parent="1">
-          <mxGeometry x="987" y="175" width="78" height="78" as="geometry" />
-        </mxCell>
-        <mxCell id="pOMxqucZRWbTER7i5tgz-26" value="" style="shape=image;html=1;verticalAlign=top;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;imageAspect=0;aspect=fixed;image=https://cdn0.iconfinder.com/data/icons/long-shadow-web-icons/512/angular-symbol-128.png" vertex="1" parent="1">
-          <mxGeometry x="1087" y="175" width="78" height="78" as="geometry" />
-        </mxCell>
         <mxCell id="pOMxqucZRWbTER7i5tgz-35" value="&lt;font style=&quot;font-size: 35px;&quot;&gt;CLIENT&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9999FF;" vertex="1" parent="1">
           <mxGeometry x="837" y="15" width="390" height="150" as="geometry" />
         </mxCell>
@@ -76,6 +70,9 @@
             <mxPoint x="830.9700000000003" y="121.86000000000013" as="sourcePoint" />
             <mxPoint x="660" y="130" as="targetPoint" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="pOMxqucZRWbTER7i5tgz-65" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.575;entryDx=0;entryDy=0;entryPerimeter=0;strokeWidth=3;" edge="1" parent="1" source="pOMxqucZRWbTER7i5tgz-50" target="pOMxqucZRWbTER7i5tgz-4">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="pOMxqucZRWbTER7i5tgz-50" value="" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/databases/Cache_Redis.svg;" vertex="1" parent="1">
           <mxGeometry x="550" y="450" width="156.31" height="127" as="geometry" />
@@ -110,6 +107,12 @@
         </mxCell>
         <mxCell id="pOMxqucZRWbTER7i5tgz-54" value="" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.cloud_2;fillColor=#F58534;gradientColor=none;" vertex="1" parent="1">
           <mxGeometry x="2030" y="-30" width="290" height="270" as="geometry" />
+        </mxCell>
+        <mxCell id="pOMxqucZRWbTER7i5tgz-63" value="" style="shape=image;html=1;verticalAlign=top;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;imageAspect=0;aspect=fixed;image=https://cdn2.iconfinder.com/data/icons/boxicons-logos/24/bxl-tailwind-css-128.png;imageBackground=#000033;" vertex="1" parent="1">
+          <mxGeometry x="990" y="175" width="78" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="pOMxqucZRWbTER7i5tgz-64" value="&lt;pre&gt;&lt;font style=&quot;font-size: 34px;&quot;&gt;MUI&lt;/font&gt;&lt;/pre&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="1090" y="175" width="80" height="80" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
